@@ -4,6 +4,10 @@ class Cell:
         self.x = int(x)
         self.y = int(y)
         self.value = int(value)
+        if self.value == 0:
+            self.given = False
+        else:
+            self.given = True
         if x in range(0,3):
             if y in range(0,3):
                 self.region = 0

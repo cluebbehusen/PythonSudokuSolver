@@ -1,5 +1,4 @@
 import os
-clear = lambda: os.system('clear')
 
 def backtracking_solve(grid):
     cell = grid.get_empty_cell()
