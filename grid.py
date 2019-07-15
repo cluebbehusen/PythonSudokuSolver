@@ -1,13 +1,17 @@
 class Cell:
+    """Cell object to hold information about each cell in grid."""
 
     def __init__(self, x, y, value):
+        # It is useful for the cell to contain information about its location.
         self.x = int(x)
         self.y = int(y)
         self.value = int(value)
+        # Check if the cell is given or not.
         if self.value == 0:
             self.given = False
         else:
             self.given = True
+        # Find region for the cell.
         if x in range(0,3):
             if y in range(0,3):
                 self.region = 0
@@ -31,6 +35,7 @@ class Cell:
                 self.region = 8
 
     def __str__(self):
+        # Visualization of the grid is easier if empty cells do not hold zero
         if self.value == 0:
             return '-'
         return str(self.value)
@@ -41,6 +46,7 @@ class Grid:
     def __init__(self, file):
         self.grid = []
         x = 0
+        # Gather and create cells from given file.
         with open (file, 'r') as grid_file:
             for line in grid_file:
                 y = 0
@@ -65,10 +71,12 @@ class Grid:
         return return_string
 
     def get_empty_cell(self):
+        """Finds the next empty cell in the grid."""
         x = 0
         y = 0
         for row in self.grid:
             for cell in row:
+                # Rather than going row by row, work down in a square shape to increase speed.
                 if y > x and self.grid[x][y].value == 0:
                     return self.grid[x][y]
                 if cell.value == 0:
@@ -79,6 +87,7 @@ class Grid:
         return False
 
     def check_row_validity(self, target_cell, test_value):
+        """Checks if a test value is valid in the current row."""
         for cell in self.grid[target_cell.x]:
             if cell.x == target_cell.x and cell.y == target_cell.y:
                 pass
@@ -87,6 +96,7 @@ class Grid:
         return True
 
     def check_col_validity(self, target_cell, test_value):
+        """Checks if a test value is valid in the current column."""
         for row in self.grid:
             cell = row[target_cell.y]
             if cell.x == target_cell.x and cell.y == target_cell.y:
@@ -96,6 +106,7 @@ class Grid:
         return True
 
     def check_region_validity(self, target_cell, test_value):
+        """Checks if a test value is valid in the current region."""
         for row in self.grid:
             for cell in row:
                 if cell.x == target_cell.x and cell.y == target_cell.y:
@@ -106,6 +117,7 @@ class Grid:
         return True
 
     def check_validity(self, target_cell, test_value):
+        """Checks and returns result of all validity checks"""
         return (self.check_row_validity(target_cell, test_value) and
                 self.check_col_validity(target_cell, test_value) and
                 self.check_region_validity(target_cell, test_value))

@@ -1,6 +1,7 @@
 import os
 
 def backtracking_solve(grid):
+    # Find the next empty cell
     cell = grid.get_empty_cell()
     if not cell:
         print('== Puzzle Solved ==')
